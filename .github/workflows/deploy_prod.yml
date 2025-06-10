@@ -10,7 +10,7 @@ env:
 
 jobs:
   job1:
-    name: DeployStg
+    name: DeployProd
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
