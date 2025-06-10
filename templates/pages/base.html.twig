@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  <meta property="og:title" content="{% block meta_og_title %}Welcom!{% endblock %}">
+  <meta name="description" content="{% block meta_description %}Description{% endblock %}">
+  <meta property="og:description" content="{% block meta_og_description %}Description{% endblock %}">
+  <meta property="og:url" content="{% block meta_og_siteurl %}{{ app.request.uri }}{% endblock %}">
+  <meta property="og:site_name" content="SiteName">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="{% block meta_twitter_title %}Welcome!{% endblock %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block meta_og_image %}
+    <meta property="og:image" content="{{ absolute_url(asset('build/images/ogp.png')) }}">
+    <meta property="og:image:alt" content="OG-Image-Alt">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+  {% endblock %}
+  <link rel="icon" href="/favicon.icon">
+  {% block head %}{% endblock %}
+  {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+  {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+  {% endblock %}
+
+  {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+</head>
+<body{% if _page is defined %} id="{{ _page }}"{% endif %}>
+{% block header %}
+  {% include 'layouts/_header.html.twig' %}
+{% endblock %}
+<main>
+  {% block body %}{% endblock %}
+</main>
+{% block footer %}
+  {% include 'layouts/_footer.html.twig' %}
+{% endblock %}
+</body>
+</html>

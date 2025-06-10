@@ -1,0 +1,11 @@
+{# ボタンの雛形 #}
+{% if href is not defined %}
+  <button type="{{ type|default("button") }}" class="{% if extra_class is defined %}{{ extra_class }}{% endif %}">
+    {{ label }}
+  </button>
+{% else %}
+  <a {% if new_tab is defined %}target="_blank" {% endif %} href="{{ href }}"
+     class="{% if extra_class is defined %}{{ extra_class }}{% endif %}">
+    {{ label }}
+  </a>
+{% endif %}

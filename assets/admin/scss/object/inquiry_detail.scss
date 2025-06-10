@@ -1,0 +1,17 @@
+.c_inquiry-detail {
+  border-bottom: 1px solid #999;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  &__label {
+    display: block;
+  }
+  &__value {
+    display: block;
+    padding-left: 0.6rem;
+  }
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+}

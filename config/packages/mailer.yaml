@@ -1,0 +1,12 @@
+when@prod:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_DSN)%'
+
+when@dev:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_DSN)%'
+            envelope:
+                recipients: ['%env(DEV_MAIL)%']
+                sender: "info@triple-e.inc"

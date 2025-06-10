@@ -1,0 +1,56 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}{{ entry.title }} | {{ parent() }}{% endblock %}
+{% block meta_og_title %}{{ entry.title }} | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}{{ entry.title }} | {{ parent() }}{% endblock %}
+{% block meta_description %}{{ entry.descriptionForHtml }}{% endblock %}
+{% block meta_og_description %}{{ entry.descriptionForHtml }}{% endblock %}
+{% block meta_og_image %}
+{% if entry.mainImage %}
+  <meta property="og:image" content="{{ absolute_url(entry.getImageUrl) }}">
+  <meta property="og:image:alt" content="{{ entry.title }}">
+  <meta property="og:image:width" content="{{ entry.mainImageWidth }}">
+  <meta property="og:image:height" content="{{ entry.mainImageHeight }}">
+{% else %}
+  {{ parent() }}
+{% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('news_index')}}">
+    News
+  </a>
+  <a class="breadcrumb-item" href="{{ path('news_index', {Category: entry.category.id}) }}">
+    {{ entry.category }}
+  </a>
+  <a class="breadcrumb-item" href="{{ path('news_detail', {id: entry.id}) }}">
+    {{ entry.title }}
+  </a>
+</div>
+
+  {% include "pages/news/_detail.html.twig" %}
+
+  <div>
+    {% if before %}
+      <a href="{{ path('news_detail', {
+        id: before.id
+      }) }}">&lt; {{ before.title|strim_width(40) }}</a>
+    {% endif %}
+
+    <a href="{{ path('news_index') }}">
+      一覧へ戻る
+    </a>
+
+    {% if after %}
+      <a href="{{ path('news_detail', {
+        id: after.id
+      }) }}"> {{ after.title|strim_width(40) }} &gt;</a>
+    {% endif %}
+
+  </div>
+
+{% endblock %}

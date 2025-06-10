@@ -1,0 +1,52 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    document_root: "%kernel.project_dir%/public_html"
+    resource_dir: "%kernel.project_dir%/resources"
+
+    #CMS upload dir
+    cms_upload_dir: "%kernel.project_dir%/%env(APP_CMS_UPLOAD_DIR)%"
+    cms_upload_dir_symlink: "%document_root%/%env(APP_CMS_UPLOAD_DIR_SYMLINK)%"
+    cms_upload_dir_http: "/%env(APP_CMS_UPLOAD_DIR_SYMLINK)%"
+
+    # API Cors header allow origin
+    cors.origin: '/https?:\/\/(www\.)your\-domain\.com|http:\/\/localhost:3000|triple\-e\-jp\.vercel\.app$/'
+
+    # InquiryValidation
+    inquiry.form_validation: "%env(resolve:INQUIRY_VALIDATION)%"
+
+    # MailConfig
+    mail.from: "info@triple-e.inc"
+    mail.from_name: "Triple-E API"
+    mail.reply_to: "info@triple-e.inc"
+    mail.return_path: "info@triple-e.inc"
+    mail.to:
+        - "info@triple-e.inc"
+
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+
+    #sitemap service
+    sitemap_fixed:
+        - "top"
+        - "contact_index"
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

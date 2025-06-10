@@ -1,0 +1,17 @@
+@use "@scss/global/mixins" as *;
+@use "@scss/global/variables" as *;
+
+
+/**
+ * インナー
+ */
+
+@mixin u-base-contents-width($content-inner:$inner-pc) {
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: $padding-sp;
+  @include lg {
+    max-width: calc(size($content-inner) + calc($padding-pc * 2));
+    padding-inline: $padding-pc;
+  }
+}

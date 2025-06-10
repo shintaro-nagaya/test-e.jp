@@ -1,0 +1,56 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_description %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_description %}お問い合わせ | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('contact_index')}}">
+    お問い合わせ
+  </a>
+  <div class="breadcrumb-item">
+    確認
+  </div>
+</div>
+
+{{ form_start(confirmForm, {
+  action: path('contact_send')
+}) }}
+  {% embed "components/form/_row.html.twig" with {
+    form: form.name,
+    required: false
+  } only %}
+    {% block elements %}
+      {{ form.vars.value }}
+    {% endblock %}
+  {% endembed %}
+  {% embed "components/form/_row.html.twig" with {
+    form: form.email,
+    required: false
+  } only %}
+    {% block elements %}
+      {{ form.vars.value }}
+    {% endblock %}
+  {% endembed %}
+  {% embed "components/form/_row.html.twig" with {
+    form: form.message,
+    required: false
+  } only %}
+    {% block elements %}
+      {{ form.vars.value|nl2br }}
+    {% endblock %}
+  {% endembed %}
+
+  <a href="{{ path('contact_index') }}">戻る</a>
+  <button type="submit">送信する</button>
+  {% include "components/_google_recaptcha.html.twig" %}
+
+{{ form_end(confirmForm) }}
+
+{% endblock %}

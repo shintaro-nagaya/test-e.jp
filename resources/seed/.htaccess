@@ -1,0 +1,3 @@
+<FilesMatch \.php|\.py|\.rb|\.pl|\.cgi$>
+deny from all
+</FilesMatch>

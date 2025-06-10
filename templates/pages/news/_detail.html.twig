@@ -1,0 +1,52 @@
+<h1>
+  {{ entry.title }}
+</h1>
+
+<time>
+  {{ entry.entryDate|date('Y.m.d') }}
+</time>
+
+{% if entry.mainImage %}
+<figure>
+  <img src="{{ entry.getImageUrl }}" alt="{{ entry.title }}">
+</figure>
+{% endif %}
+
+{% if entry.content %}
+<div>
+  {{ entry.content|raw }}
+</div>
+{% endif %}
+
+{% for child in entry.children %}
+{% if child.haveContent %}
+
+  {% if child.headline %}
+    <h2>
+      {{ child.headline }}
+    </h2>
+  {% endif %}
+  {% if child.image %}
+    <figure>
+      <img src="{{ child.getImageUrl }}" alt="{{ child.headline }}">
+    </figure>
+  {% endif %}
+  {% if child.youtubeId %}
+    <div class="c_cms-youtube">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/{{ child.youtubeId }}?controls=0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        class="c_cms-youtube__iframe"
+      ></iframe>
+    </div>
+  {% endif %}
+  {% if child.content %}
+    <div>
+      {{ child.content|raw }}
+    </div>
+  {% endif %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,11 @@
+{% extends "pages/base.html.twig" %}
+{% set _page = "index" %}
+{% block title %}TOP{% endblock %}
+{% block body %}
+<h1>TOP</h1>
+  <figure><img src="{{ asset('build/images/no_image.png') }}" alt="noImage"></figure>
+
+<h2>News</h2>
+<div class="js_cms-headline" data-endpoint="{{ path('news_headline') }}"></div>
+
+{% endblock %}

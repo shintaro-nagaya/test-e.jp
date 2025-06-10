@@ -1,0 +1,71 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}News記事 {% if isCreate %}作成{% else %}編集{% endif %}{% endblock %}
+{% block body %}
+<h2 class="h2 l_admin__title">
+  News記事 {% if isCreate %}作成{% else %}編集{% endif %}
+</h2>
+{{ form_start(form, {
+  attr: {
+    id: "input-form",
+    class: "l_form"
+  },
+  method: "DELETE"
+}) }}
+<div class="l_form__row l_form__row--3box">
+  {{ form_row(form.title) }}
+  {{ form_row(form.entryDate, {
+    attr: {
+      class: "w-auto"
+    },
+    row_attr: {
+      class: "w-auto"
+    }
+  }) }}
+  {{ form_row(form.enable, {
+    row_attr: {
+      class: "align-self-center mx-4"
+    }
+  }) }}
+</div>
+
+{% include "admin/include/cmsEntry/form/_category.html.twig"%}
+
+{% include "admin/include/cmsEntry/form/_publishDate.html.twig" %}
+
+<div class="l_form__row">
+  {{ form_row(form.description) }}
+</div>
+
+{% include "admin/include/cmsEntry/form/_link.html.twig" %}
+
+{% include "admin/include/cmsEntry/form/_image.html.twig" %}
+
+<div class="l_form__row l_form__row--full">
+  {{ form_row(form.content, {
+    attr: {
+      class: "ckeditor w-100"
+    }
+  }) }}
+</div>
+
+<div class="js_cms-child-forms c_cms-child-forms" data-add-endpoint="{{path('admin_news_entry_child')}}">
+  {% for child in form.children %}
+  {% include "admin/news/entry/_child.html.twig" %}
+  {% endfor %}
+</div>
+<div class="js_cms-child-forms-control c_cms-child-forms__add">
+  <a class="btn btn-success js_cms-child-forms-add">段落追加</a>
+</div>
+
+{% include "admin/include/_formBtn.html.twig" with {
+  returnPage: path('admin_news_entry', returnParams),
+  addDeleteBtn: isCreate == false and canDelete == true,
+  deletePage: isCreate == false and canDelete == true ? path('admin_news_entry_delete', {id: form.vars.value.id}): "",
+  csrfToken: csrf_token('news_entry_delete_'~form.vars.value.id),
+  deleteConfirmMessage: 'この記事を削除しますか?',
+  previewEndpoint: path('admin_news_entry_preview')
+} %}
+
+{{ form_end(form) }}
+
+{% endblock %}

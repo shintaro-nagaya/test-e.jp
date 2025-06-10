@@ -1,0 +1,86 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}Newsカテゴリー{% endblock %}
+{% block body %}
+
+<h2 class="h2 l_admin__title">
+  Newsカテゴリー
+</h2>
+
+  {{ form_start(form, {
+    action: path('admin_news_category'),
+    attr: {
+      class: "l_index__search js_search-form l_form"
+    }
+  }) }}
+  <div class="l_form__row">
+    {{ form_row(form.enable, {
+      attr: {
+        class: "w-auto"
+      }
+    }) }}
+  </div>
+  <div>
+    <button class="btn btn-info" type="submit">検索</button>
+    <a class="btn btn-warning js_search-form-reset">リセット</a>
+  </div>
+  {{ form_end(form) }}
+
+  {% include "admin/include/_pagination.html.twig" %}
+  <div class="l_index__table-pre-space">
+    <a
+      href="{{ path('admin_news_category_add', {
+        return_page: paginate.currentPage
+      }) }}"
+      class="btn btn-primary">作成</a>
+  </div>
+
+  <table class="l_table table">
+    <thead>
+      <tr>
+        <th>
+          名称
+        </th>
+        <th>
+          有効
+        </th>
+        <th>
+          順番
+        </th>
+        <th class="l_table__btn-col">
+          編集
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in data %}
+      <tr>
+        <td>
+          {{ item.name }}
+        </td>
+        <td>
+          {{ item.enable ? "有効"}}
+        </td>
+        <td class="l_table__sort-col">
+          <form
+            action="{{ path('admin_news_category_sort', {
+              id: item.id,
+              return_page: paginate.currentPage
+            }) }}"
+            method="post"
+            >
+            <input type="hidden" name="_token" value="{{ csrf_token('news_category_sort_' ~ item.id) }}">
+            <label><input type="number" value="{{ item.sort }}" name="sort[sort]" min="1" max="9999" required class="l_form__size--w6"></label>
+            <button type="submit" class="btn btn-success">順番変更</button>
+          </form>
+        </td>
+        <td>
+          <a href="{{ path('admin_news_category_edit', {
+            id: item.id,
+            return_page: paginate.currentPage
+          }) }}" class="btn btn-info">編集</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

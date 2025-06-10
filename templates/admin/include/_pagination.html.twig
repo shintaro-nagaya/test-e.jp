@@ -1,0 +1,40 @@
+{% set _currentRoute = app.request.attributes.get('_route') %}
+{% set _currentParams = app.request.query.all %}
+{% if path_params is defined %}
+    {% set _currentParams = _currentParams|merge(path_params) %}
+{% endif %}
+{% if paginate.hasPagination %}
+<nav class="admin-pagination">
+    <ul class="pagination">
+        {% if not paginate.isFirstPage %}
+        <li class="page-item">
+            <a href="{{ path(_currentRoute, _currentParams|merge({page: 1})) }}" class="page-link">
+                最初
+            </a>
+        </li>
+        {% endif %}
+
+        {% for i in paginate.getSlidingPageList(4) %}
+        {% if i == paginate.getCurrentPage %}
+        <li class="page-item active">
+            <b class="page-link">{{ i }}</b>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="{{ path(_currentRoute, _currentParams|merge({page: i})) }}" class="page-link">
+                {{ i }}
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if not paginate.isLastPage %}
+        <li class="page-item">
+            <a href="{{ path(_currentRoute, _currentParams|merge({page: paginate.getTotalPage})) }}" class="page-link">
+                最後
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

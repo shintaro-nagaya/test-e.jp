@@ -1,0 +1,42 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_description %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_description %}お問い合わせ | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('contact_index')}}">
+    お問い合わせ
+  </a>
+  <div class="breadcrumb-item">
+    確認
+  </div>
+  <div class="breadcrumb-item">
+    送信中
+  </div>
+</div>
+
+<form
+  {% if app.environment == "prod" %}
+  action="{# Pardot endpoint url #}"
+  {% else %}
+  action="{{ path('contact_pardot_mock')}}"
+  {% endif %}
+  method="post"
+  class="js_pardot-form"
+>
+  <input type="hidden" name="name" value="{{ inquiry.name }}">
+  <input type="hidden" name="email" value="{{ inquiry.email }}">
+  <input type="hidden" name="message" value="{{ inquiry.message }}">
+  <p class="c_pardot-form__message js_pardot-form__message">
+    ただいま送信中です。送信されない場合<a class="c_pardot-form__message--send js_pardot-form__message--send">こちら</a>を押してください
+  </p>
+</form>
+
+{% endblock %}

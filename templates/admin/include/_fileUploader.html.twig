@@ -1,0 +1,20 @@
+<div>
+  <label>{{ form_label(file_element) }}</label>
+  <div
+    class="js_fileUploader"
+    data-entity="{{ entity }}"
+    data-file-element="#{{ file_element.vars.id }}"
+    {% if width_element is defined %}data-width-element="#{{ width_element.vars.id }}"{% endif %}
+    {% if height_element is defined %}data-height-element="#{{ height_element.vars.id}}"{% endif %}
+    {% if filesize_element is defined %}data-filesize-element="#{{ filesize_element.vars.id }}"{% endif %}
+    {% if origin_element is defined %}data-origin-element="#{{ origin_element.vars.id }}"{% endif %}
+    {% if mime_element is defined %}data-mime-element="#{{ mime_element.vars.id }}"{% endif %}
+  ></div>
+  {{ form_errors(file_element) }}
+  {{ form_widget(file_element) }}
+  {% if width_element is defined %}{{ form_widget(width_element) }}{% endif %}
+  {% if height_element is defined %}{{ form_widget(height_element) }}{% endif %}
+  {% if filesize_element is defined %}{{ form_widget(filesize_element) }}{% endif %}
+  {% if origin_element is defined %}{{ form_widget(origin_element) }}{% endif %}
+  {% if mime_element is defined %}{{ form_widget(mime_element) }}{% endif %}
+</div>

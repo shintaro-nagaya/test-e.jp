@@ -1,0 +1,121 @@
+.l_admin {
+  background-color: var(--bs-gray-900);
+  &-header {
+    background-color: var(--bs-gray-700);
+    position: fixed;
+    z-index: 2000;
+    top:0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    &-item {
+      height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    &-title a {
+      color:#fff;
+      text-decoration: none;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      height: 60px;
+      border-bottom: 1px solid #999;
+      &:hover {
+        background-color: rgba(255,255,255,.1);
+      }
+    }
+    &__link {
+      display:flex;
+      align-items: center;
+      height: 3.2rem;
+      text-decoration: none;
+      color:#fff;
+      padding: 0.5rem 0 0.5rem 2rem;
+      &:hover {
+        color: #fff;
+        background-color: rgba(255,255,255,.1);
+      }
+      &--single {
+        padding: 1rem 1.25rem;
+      }
+    }
+    &-sub {
+      height: 80px;
+      border-top: 1px solid #999;
+      &__item a {
+        color:#fff;
+        text-decoration: none;
+        padding: 1rem 1.25rem;
+        display: block;
+        &:hover {
+          background-color: rgba(255,255,255,.1);
+        }
+      }
+      &-theme {
+        display: flex;
+        &__item {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 1.5rem;
+          text-decoration: none;
+          cursor:pointer;
+          &--light {
+            background-color:var(--bs-gray-200);
+            color: #333;
+            &:hover {
+              background-color:var(--bs-gray-100);
+              color:#999;
+            }
+          }
+          &--dark {
+            background-color:var(--bs-gray-800);
+            color: #fff;
+            &:hover {
+              background-color:var(--bs-gray-900);
+              color:#aaa;
+            }
+          }
+        }
+        .active {
+          box-shadow: inset 0 0 0 3px #0076cb ;
+        }
+
+      }
+    }
+  }
+  &-body {
+    padding: 46px 0 100px 280px;
+    color:#f0f0f0;
+  }
+  &__title {
+    margin: 2rem 0;
+    padding-bottom:0.3rem;
+    border-bottom: 1px solid var(--bs-gray-600);
+  }
+}
+.light-mode {
+  background-color: var(--bs-gray-200);
+  .l_admin {
+    &-header {
+      background-color: var(--bs-gray-400);
+      &-title a {
+        color: #000;
+        border-bottom: 1px solid #666;
+      }
+      &__link {
+        color:#333;
+      }
+      &-sub {
+        border-top: 1px solid #666;
+        &__item a {
+          color:#333;
+        }
+      }
+    }
+    &-body {
+      color: var(--bs-gray-800);
+    }
+  }
+}

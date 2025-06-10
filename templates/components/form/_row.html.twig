@@ -1,0 +1,38 @@
+{# フォームの項目一列 #}
+{% set current_path = app.request.pathInfo %}
+<div class="c-form-row {% if 'confirm' in current_path %}c-form-row-confirm{% endif %}">
+
+  <div class="c-form-row-label">
+    {% if label is defined %}<label>{{ label }}</label>
+    {% else %}{{ form_label(form) }}
+    {% endif %}
+
+    {% if (form is defined and form.vars.required) and (required is not defined or required) %}
+      <span class="c-form-row-label__required">*</span>
+    {% endif %}
+  </div>
+
+  <div class="c-form-row-body js-form-validation__row">
+
+    <div class="c-form-row-body__elements js-form-validation__elements">
+      {% block elements %}
+        {% if value is defined %}{{ value }}
+        {% elseif form is defined %}
+          {% if confirm is defined %}
+            {{ form.vars.value }}
+          {% else %}
+            {% if params is not defined %}{% set params = {} %}{% endif %}
+            {{ form_widget(form, params) }}
+          {% endif %}
+        {% endif %}
+      {% endblock %}
+    </div>
+
+    <div class="c-form-row-body__errors js-form-validation__errors">
+      {% block errors %}
+        {% if form is defined %}{{ form_errors(form) }}{% endif %}
+      {% endblock %}
+    </div>
+
+  </div>
+</div>

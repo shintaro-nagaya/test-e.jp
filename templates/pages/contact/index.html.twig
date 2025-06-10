@@ -1,0 +1,56 @@
+{% extends 'pages/base.html.twig' %}
+{% form_theme form "form_theme/default.html.twig" %}
+
+{% block title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_description %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_description %}お問い合わせ | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('contact_index')}}">
+    お問い合わせ
+  </a>
+</div>
+
+{% if not retry %}
+
+  {# ページコンテンツここに #}
+
+{% else %}
+
+  {{ form_errors(form) }}
+
+{% endif %}
+
+{{ form_start(form, {
+  action: path('contact_confirm'),
+  attr: {
+    class: "c-form js-form-validation"
+  }
+}) }}
+
+  {% embed "components/form/_row.html.twig" with {
+    form: form.name,
+  } only %}
+  {% endembed %}
+  {% embed "components/form/_row.html.twig" with {
+    form: form.email
+  } only %}
+  {% endembed %}
+  {% embed "components/form/_row.html.twig" with {
+    form: form.message
+  } only %}
+  {% endembed %}
+
+  {% include "components/form/_agreement.html.twig" %}
+
+  <button type="submit">確認画面へ</button>
+
+  {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,11 @@
+@use "../mixins/media_query" as *;
+@use "sass:math";
+
+// インナー幅設定
+// コンテンツのインナー幅（最も共通の幅が多い部分）
+$inner-pc: 1040;
+// ※キュンパス幅ではなくインナーの幅を指す
+
+// 余白
+$padding-pc: 5%;
+$padding-sp: 7%;

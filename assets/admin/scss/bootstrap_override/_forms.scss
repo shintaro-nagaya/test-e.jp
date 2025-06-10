@@ -1,0 +1,20 @@
+.invalid-feedback {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.form-check-input.is-invalid ~ .form-check-label {
+  color:#fff;
+}
+legend.col-form-label+div {
+  display: flex;
+  flex-wrap: wrap;
+  & .form-check {
+    margin-right: 1rem;
+  }
+}
+
+.light-mode {
+  .form-control, .form-select {
+    border-color: #666;
+  }
+}

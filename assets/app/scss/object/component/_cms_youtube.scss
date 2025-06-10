@@ -1,0 +1,15 @@
+@use "../../global/mixins/media_query" as mq;
+@use "../../global/variables/breakpoints" as bp;
+
+.c_cms-youtube {
+  width: 100%;
+  max-width: bp.$lg;
+  &__iframe {
+    width: 100vw;
+    height: 56.25vw;
+    @include mq.lg() {
+      width: bp.$lg;
+      height: calc(#{bp.$lg} * 0.5625);
+    }
+  }
+}

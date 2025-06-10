@@ -1,0 +1,26 @@
+name: Release to X server
+on:
+  push:
+    branches:
+      - stg
+
+jobs:
+  job1:
+    name: DeployStg
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/${{ secrets.SSH_USERNAME }}/${{ secrets.SITE_DOMAIN }}/stg
+            git --git-dir=./.git fetch
+            git --git-dir=./.git --work-tree=./ checkout stg -f
+            /usr/bin/php8.2 /home/${{ secrets.SSH_USERNAME }}/composer.phar install
+            yarn install
+            yarn build

@@ -1,0 +1,11 @@
+.l_index {
+
+  &__search {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--bs-gray-700);
+  }
+  &__table-pre-space {
+    margin-bottom: 1rem;
+  }
+}

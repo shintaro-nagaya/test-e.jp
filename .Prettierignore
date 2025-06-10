@@ -1,0 +1,24 @@
+# builded files.
+public_html
+
+# node_modules
+node_modules
+
+# package
+package-lock.json
+yarn.lock
+
+# markdowns
+*.md
+
+# other folders
+bin
+config
+migrations
+resources
+src
+tests
+translations
+var
+vendor
+templates

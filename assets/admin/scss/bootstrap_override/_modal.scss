@@ -1,0 +1,12 @@
+.modal {
+  z-index: 8000;
+}
+.modal-content {
+  background-color: var(--bs-gray-900);
+  border: 1px solid var(--bs-gray-400);
+}
+.light-mode {
+  .modal-content {
+    background-color: #fff;
+  }
+}

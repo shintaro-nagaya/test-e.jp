@@ -1,0 +1,12 @@
+{{ form.vars.value.name }}様
+
+この度おとい合わせいただきありがとうございます。
+以下の内容で送信されました
+
+--------
+{% include "mail/contact/_body.txt.twig" %}
+--------
+
+このメールは自動送信されています。
+
+{% include "mail/_sign.txt.twig" %}

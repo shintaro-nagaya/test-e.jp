@@ -1,0 +1,30 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_description %}お問い合わせ | {{ parent() }}{% endblock %}
+{% block meta_og_description %}お問い合わせ | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('contact_index')}}">
+    お問い合わせ
+  </a>
+  <div class="breadcrumb-item">
+    確認
+  </div>
+  <div class="breadcrumb-item">
+    送信完了
+  </div>
+</div>
+
+<p>
+  お問い合わせを送信しました。<br>
+  <a href="{{ path('top') }}">トップページへ戻る</a>
+</p>
+
+{% endblock %}

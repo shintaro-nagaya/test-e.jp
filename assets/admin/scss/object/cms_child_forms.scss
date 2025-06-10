@@ -1,0 +1,14 @@
+.c_cms-child-forms {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__item {
+    padding-top: 3rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--bs-gray-600);
+  }
+  &__add {
+    padding-bottom: 4rem;
+  }
+}

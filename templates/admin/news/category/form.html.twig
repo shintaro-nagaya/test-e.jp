@@ -1,0 +1,38 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}Newsカテゴリー {% if isCreate %}作成{% else %}編集{% endif %}{% endblock %}
+{% block body %}
+
+<h2 class="h2 l_admin__title">
+  Newsカテゴリー {% if isCreate %}作成{% else %}編集{% endif %}
+</h2>
+  {{ form_start(form, {
+    attr: {
+      id: "input-form",
+      class: "l_form"
+    }
+  } )}}
+  <div class="l_form__row l_form__row--4box">
+    {{ form_row(form.name) }}
+    {{ form_row(form.sort, {
+      attr: {
+        class: "l_form__size--w6"
+      }
+    }) }}
+    {{ form_row(form.enable, {
+      row_attr: {
+        class: "align-self-center"
+      }
+    }) }}
+  </div>
+
+  {% include "admin/include/_formBtn.html.twig" with {
+    returnPage: path('admin_news_category', returnParams),
+    addDeleteBtn: isCreate == false and canDelete == true,
+    deletePage: isCreate == false and canDelete == true ? path('admin_news_category_delete', {id: form.vars.value.id}): "",
+    csrfToken: csrf_token('news_category_delete_'~form.vars.value.id),
+    deleteConfirmMessage: 'このカテゴリーを削除しますか?'
+  } %}
+
+{{ form_end(form) }}
+
+{% endblock %}

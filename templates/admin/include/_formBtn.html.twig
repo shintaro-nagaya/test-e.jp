@@ -1,0 +1,36 @@
+<div class="l_form-btn">
+  <div class="container d-flex justify-content-between">
+    <div class="l_form-btn__back">
+      {% if returnPage is defined and returnPage %}
+      <a href="{{ returnPage }}" class="btn btn-success btn-outline-dark">
+        一覧へ戻る
+      </a>
+      {% endif %}
+    </div>
+    <div class="l_form-btn__submit">
+      <button type="submit" class="btn btn-primary btn-outline-dark" id="input-form-submit">
+        {{ isCreate? "作成": "保存"}}
+      </button>
+      {% if previewEndpoint is defined %}
+      <a
+        class="btn btn-warning btn-outline-dark"
+        id="input-form-preview"
+        data-endpoint="{{ previewEndpoint }}"
+      >
+        プレビュー
+      </a>
+      {% endif %}
+    </div>
+    <div class="l_form-btn__delete">
+      {% if addDeleteBtn %}
+        <a
+          class="btn btn-danger"
+          id="input-form-delete"
+          data-endpoint="{{ deletePage }}"
+          data-message="{{ deleteConfirmMessage }}"
+          data-token="{{ csrfToken }}"
+        >削除</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

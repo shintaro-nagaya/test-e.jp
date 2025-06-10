@@ -1,0 +1,50 @@
+/**
+ * 現在仮で作っておきます
+ */
+@use '../../../global/variables' as *;
+
+/**
+ * 行
+ */
+.c-form-row {
+
+}
+/**
+ * ラベル部分
+ */
+.c-form-row-label {
+
+}
+.c-form-row-body {
+
+  /**
+   * 入力フォーム
+   */
+  &__elements {
+    .form-select,
+    .form-control {
+      border: 1px solid #000;
+    }
+
+    /**
+     * エラーの時
+     */
+    .is-invalid {
+      background-color:#f99;
+    }
+  }
+  /**
+   * エラー表示部分
+   */
+  &__errors {
+
+    /**
+     * エラーメッセージ
+     */
+    &--error {
+      color:#f00;
+    }
+
+  }
+
+}

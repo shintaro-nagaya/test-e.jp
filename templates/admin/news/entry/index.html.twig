@@ -1,0 +1,133 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}News記事{% endblock %}
+{% block body %}
+
+<h2 class="h2 l_admin__title">
+  News記事
+</h2>
+
+{{ form_start(form, {
+  action: path('admin_news_entry'),
+  attr: {
+    class: "l_index__search js_search-form l_form"
+  }
+}) }}
+<div class="l_form__row l_form__row--4box">
+  {{ form_row(form.Category, {
+    attr: {
+      class: "w-auto"
+    }
+  }) }}
+
+  <div>
+    {{ form_label(form.entryDateFrom) }}
+    <div class="d-flex">
+      {{ form_widget(form.entryDateFrom) }}〜{{ form_widget(form.entryDateTo) }}
+    </div>
+  </div>
+
+  {{ form_row(form.enable, {
+    attr: {
+      class: "w-auto"
+    }
+  }) }}
+  {{ form_row(form.limit, {
+    attr: {
+      class: "w-auto"
+    }
+  }) }}
+</div>
+<div>
+  <button class="btn btn-info" type="submit">検索</button>
+  <a class="btn btn-warning js_search-form-reset">リセット</a>
+</div>
+{{ form_end(form) }}
+
+{% include "admin/include/_pagination.html.twig" %}
+
+<div class="l_index__table-pre-space">
+  <a href="{{ path("admin_news_entry_add", {
+    return_page: paginate.currentPage
+  }) }}"
+     class="btn btn-primary"
+  >記事作成</a>
+</div>
+
+<table class="l_table table">
+  <thead>
+    <tr>
+      <th>
+        記事タイトル
+      </th>
+      <th>
+        日付
+      </th>
+      <th>
+        カテゴリ
+      </th>
+      <th>
+        公開
+      </th>
+      <th class="l_table__btn-col">
+        編集
+      </th>
+      <th class="l_table__btn-col--preview">
+        プレビュー
+      </th>
+      <th class="l_table__btn-col">
+        複製
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for entry in data %}
+    <tr>
+      <td>
+        {{ entry.title|strim_width(60) }}
+      </td>
+      <td>
+        {{ entry.entryDate|date('Y.m.d')}}
+      </td>
+      <td>
+        {{ entry.Category }}
+      </td>
+      <td>
+        {{ entry.enable ? "公開": "非公開" }}
+      </td>
+      <td>
+        <a
+          href="{{ path('admin_news_entry_edit', {
+            id: entry.id,
+            return_page: paginate.currentPage
+          }) }}"
+          class="btn btn-info">
+          編集
+        </a>
+      </td>
+      <td>
+        <a
+          href="{{ path('admin_news_entry_preview', {id: entry.id}) }}"
+          class="btn btn-warning"
+          target="preview"
+        >
+          プレビュー
+        </a>
+      </td>
+      <td>
+        <a
+          href="{{ path('admin_news_entry_edit', {
+            id: entry.id,
+            return_page: paginate.currentPage,
+            clone: true
+          }) }}"
+          class="btn btn-success"
+          onclick="return confirm('{{ entry.title|e('js') }} を複製しますか？');"
+        >
+          複製
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

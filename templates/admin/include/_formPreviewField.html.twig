@@ -1,0 +1,20 @@
+<div
+  class="mb-3 l_form__preview{% if class is defined %} {{ class }}{% endif %}"
+  {% if attr is defined %}{% for key, item in attr %}
+  {{ key }}="{{ item }}"
+  {% endfor %}{% endif %}
+>
+  {% if label %}<label class="form-label">
+    {{ label }}
+  </label>{% endif %}
+  <span
+    class="l_form__preview--value{% if value_class is defined %} {{ value_class }}{% endif %}"
+    {% if value_attr is defined %}{% for key, item in value_attr %}
+    {{ key }}="{{ item }}"
+  {% endfor %}{% endif %}
+  >
+    {% block body %}
+    {% if value is defined %}{{ value|nl2br }}{% endif %}
+    {% endblock %}
+  </span>
+</div>

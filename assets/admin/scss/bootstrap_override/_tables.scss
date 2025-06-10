@@ -1,0 +1,14 @@
+.table {
+  --#{$prefix}table-bg: transparent;
+  --#{$prefix}table-color: #fff;
+}
+
+.light-mode {
+  .table {
+    --#{$prefix}table-color: #000;
+
+    & > :not(caption) > * > * {
+      border-bottom-color: var(--bs-gray-600);
+    }
+  }
+}

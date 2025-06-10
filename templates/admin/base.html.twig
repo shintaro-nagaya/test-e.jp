@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  {% block stylesheets %}
+    {{ encore_entry_link_tags('admin') }}
+  {% endblock %}
+  {% block javascripts %}
+    {{ encore_entry_script_tags('admin') }}
+  {% endblock %}
+</head>
+<body class="l_admin{% if is_granted('ROLE_ADMIN') and app.user.adminLightMode %} light-mode{% endif %}">
+{% if is_granted('ROLE_ADMIN') %}
+  <header class="l_admin-header">
+    <div class="l_admin-header-container">
+      <div class="l_admin-header-title">
+        <a href="{{ path('admin_dashboard') }}">
+          {# TODO: サイトの名前に変える #}
+          Admin
+        </a>
+      </div>
+      <div class="l_admin-header-item accordion" id="AdminHeaderMenu">
+        {% include "admin/include/_menu_item.html.twig" with {
+          key: "News",
+          name: "News",
+          uri: '{/admin/news}',
+          items: [
+            {
+              name: "News記事",
+              uri: path('admin_news_entry')
+            },
+            {
+              name: "Newsカテゴリーメンテナンス",
+              uri: path('admin_news_category')
+            }
+          ]
+        } %}
+        {% include "admin/include/_menu_item.html.twig" with {
+          name: "お問い合わせ履歴",
+          uri: path('admin_contact_data')
+        } %}
+        {% include "admin/include/_menu_item.html.twig" with {
+          key: "Config",
+          name: "設定",
+          uri: '{/admin/account}',
+          items: [
+            {
+              name: "ログインアカウント",
+              uri: path('admin_account'),
+              enable: is_granted('ROLE_SUPER_ADMIN')
+            },
+            {
+              name: "パスワード変更",
+              uri: path('admin_account_password_update'),
+              enable: not is_granted('ROLE_SUPER_ADMIN')
+            },
+            {
+              name: "ログアウト",
+              uri: path('admin_logout'),
+              extraAttr: {
+                onclick: "return('ログアウトしますか？');"
+              }
+            }
+          ]
+        } %}
+      </div>
+    </div>
+    <div class="l_admin-header-sub">
+      <div class="l_admin-header-sub__item">
+        <a href="{{ path('top') }}" target="_blank">
+          ホームページ
+        </a>
+      </div>
+      <div class="l_admin-header-sub-theme">
+        <a
+          class="l_admin-header-sub-theme__item l_admin-header-sub-theme__item--light js_admin-theme-toggle{% if app.user.adminLightMode %} active{% endif %}"
+          data-theme="light"
+        >
+          Light
+        </a>
+        <a
+          class="l_admin-header-sub-theme__item l_admin-header-sub-theme__item--dark js_admin-theme-toggle{% if not app.user.adminLightMode %} active{% endif %}"
+          data-theme="dark"
+        >
+          Dark
+        </a>
+      </div>
+    </div>
+
+  </header>
+{% endif %}
+<main class="l_admin-body">
+  {% for label, messages in app.flashes %}
+    {% for message in messages %}
+      <div class="l_flash js_flash container alert alert-{% if label == "success" %}primary{% elseif label == "error" %}danger{% else %}success{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+  <div class="container">
+    {% block body %}{% endblock %}
+  </div>
+</main>
+</body>
+</html>

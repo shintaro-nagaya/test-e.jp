@@ -1,0 +1,24 @@
+@import "~bootstrap/scss/bootstrap";
+@import "bootstrap_override/form_check";
+@import "bootstrap_override/forms";
+@import "bootstrap_override/header_accordion";
+@import "bootstrap_override/modal";
+@import "bootstrap_override/jq_select2";
+@import "bootstrap_override/tables";
+@import "layout/admin";
+@import "layout/index";
+@import "layout/form";
+@import "layout/form_btn";
+@import "layout/flash";
+@import "layout/table";
+@import "layout/login_form";
+@import "layout/datetime_widget";
+@import "assets/admin/scss/object/file_uploader";
+@import "assets/admin/scss/object/cms_child_forms";
+@import "object/inquiry_detail";
+@import "object/utils";
+
+//TODO　ckedtiorのエラーが解決された場合は消す
+.cke_notifications_area {
+  display: none;
+}

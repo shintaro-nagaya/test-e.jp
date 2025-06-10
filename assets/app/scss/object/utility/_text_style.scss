@@ -1,0 +1,14 @@
+/*
+-------------------------------------------------------------
+【 text-style 】
+example
+@mixin u-ja-font-medium-tracking-80($color,$font-size,$line-height) {
+  font-family: $font-ja;
+  font-weight: $font-medium;
+  letter-spacing: 0.08em;
+  color: $color;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+-------------------------------------------------------------
+*/

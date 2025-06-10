@@ -1,0 +1,12 @@
+<div class="l_form__row">
+  {% include "admin/include/_fileUploader.html.twig" with {
+    entity: form.vars.value.getClass~":mainImage",
+    file_element: form.mainImage,
+    width_element: form.mainImageWidth,
+    height_element: form.mainImageHeight
+  } %}
+  {% include "admin/include/_fileUploader.html.twig" with {
+    entity: form.vars.value.getClass~":thumbnail",
+    file_element: form.thumbnail
+  } %}
+</div>

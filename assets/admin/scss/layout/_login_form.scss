@@ -1,0 +1,22 @@
+.l_login-form {
+  &__message {
+    margin-bottom: 1.6rem;
+    &--error {
+      color:$red;
+    }
+  }
+  &__element {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+  &__label {
+    width: 8rem;
+  }
+  &__input {
+    max-width: 16rem;
+  }
+  &__submit {
+    margin-top: 2.6rem;
+  }
+}

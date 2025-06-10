@@ -1,0 +1,101 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}お問い合わせ{% endblock %}
+{% block body %}
+
+<h2 class="h2 l_admin__title">
+  お問い合わせ
+</h2>
+{{ form_start(form, {
+  action: path('admin_contact_data'),
+  attr: {
+    class: "l_index__search js_search-form l_form"
+  }
+}) }}
+  <div class="l_form__row l_form__row--4box">
+    <div>
+      {{ form_label(form.send_from) }}
+      <div class="d-flex">
+        {{ form_widget(form.send_from) }}〜{{ form_widget(form.send_to) }}
+      </div>
+    </div>
+    {{ form_row(form.limit, {
+      attr: {
+        class: "w-auto"
+      }
+    }) }}
+  </div>
+  <div>
+    <button class="btn btn-info" type="submit">検索</button>
+    <a class="btn btn-warning js_search-form-reset">リセット</a>
+    <a href="{{ path('admin_contact_data_csv') }}" class="btn btn-success" target="_blank">
+      CSV出力
+    </a>
+  </div>
+{{ form_end(form) }}
+
+{% include "admin/include/_pagination.html.twig" %}
+
+<table class="l_table table">
+  <thead>
+    <tr>
+      <th>
+        {{ dataForm.name.vars.label }}
+      </th>
+      <th>
+        {{ dataForm.email.vars.label }}
+      </th>
+      <th>
+        送信日時
+      </th>
+      <th class="l_table__btn-col">
+        詳細
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for entry in data %}
+    <tr>
+      <td>
+        {{ entry.name }}
+      </td>
+      <td>
+        {{ entry.email }}
+      </td>
+      <td>
+        {{ entry.createdAt|date('Y.m.d H:i:s')}}
+      </td>
+      <td>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modal{{ entry.id }}">
+          詳細
+        </button>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% for entry in data %}
+<div class="modal fade" id="modal{{ entry.id }}" tabindex="-1" aria-labelledby="modal{{ entry.id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <div class="c_inquiry-detail">
+          <label class="c_inquiry-detail__label">{{ dataForm.name.vars.label }}</label>
+          <span class="c_inquiry-detail__value">{{ entry.name }}</span>
+        </div>
+        <div class="c_inquiry-detail">
+          <label class="c_inquiry-detail__label">{{ dataForm.email.vars.label }}</label>
+          <span class="c_inquiry-detail__value">{{ entry.email }}</span>
+        </div>
+        <div class="c_inquiry-detail">
+          <label class="c_inquiry-detail__label">{{ dataForm.message.vars.label }}</label>
+          <span class="c_inquiry-detail__value">{{ entry.message|nl2br }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

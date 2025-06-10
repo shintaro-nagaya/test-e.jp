@@ -1,0 +1,27 @@
+version: "3"
+services:
+    mysql:
+        image: mariadb:10.5
+        environment:
+            TZ: "Asia/Tokyo"
+            MYSQL_ROOT_PASSWORD: password
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./data:/var/lib/mysql
+            - ./:/etc/mysql/conf.d
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+            PMA_HOST: mysql
+            PMA_USER: 'root'
+            PMA_PASSWORD: 'password'
+        ports:
+            - "8080:80"
+        links:
+            - mysql
+    mailer:
+        image: mailhog/mailhog
+        ports:
+            - "8025:8025"
+            - "1025:1025"

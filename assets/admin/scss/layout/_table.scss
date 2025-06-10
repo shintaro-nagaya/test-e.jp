@@ -1,0 +1,42 @@
+.l_table {
+  width: 100%;
+  color: #ccc;
+  vertical-align: middle;
+  tbody tr td {
+    padding: 1rem 0.5rem;
+    border-bottom-color: var(--bs-gray-600);
+    background-color:#161e27;
+  }
+  tbody tr:nth-child(even) td {
+    background-color:#1d2228;
+  }
+  tbody tr:hover td {
+    background-color: #272c31;
+    transition: all .2s;
+  }
+
+  &__btn-col {
+    width: 5rem;
+    &--preview {
+      width: 8.5rem;
+    }
+  }
+  &__sort-col {
+    width: 14rem;
+    vertical-align: middle;
+  }
+}
+.light-mode {
+  .l_table {
+    color: #333;
+    tbody tr td {
+      background-color: var(--bs-gray-200);
+    }
+    tbody tr:nth-child(even) td {
+      background-color: var(--bs-gray-300);
+    }
+    tbody tr:hover td {
+      background-color: #fff;
+    }
+  }
+}

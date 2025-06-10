@@ -1,0 +1,44 @@
+/* stylelint-disable */
+.c_fileUploader {
+  position: relative;
+  display: flex;
+  align-content: center;
+  height: 60px;
+  margin-bottom: 20px;
+  max-width: 540px;
+
+  &--preview {
+    margin: 0 10px;
+
+    a {
+      display: inline-block;
+      min-width: 90px;
+      margin-right: 1rem;
+    }
+    &__image {
+      height: 60px;
+      width: 100px;
+      object-fit: cover;
+    }
+
+    .error {
+      display: inline-block;
+      color: #f33;
+    }
+    .form-check {
+      display: inline-block;
+    }
+  }
+  &--progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background-color: rgba(20, 201, 255, 0.6);
+  }
+  &--input {
+    width: 300px;
+  }
+}
+
+

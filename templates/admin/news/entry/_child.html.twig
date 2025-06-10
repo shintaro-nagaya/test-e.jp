@@ -1,0 +1,54 @@
+{% set uid = uniqid() %}
+<div
+  class="js_cms-child-form c_cms-child-forms__item"
+  style="order: {{ child.sort.vars.value }}"
+>
+  <div class="l_form__row l_form__row--3box">
+    {{ form_row(child.headline) }}
+    {{ form_row(child.sort, {
+      attr: {
+        class: "l_form__size--w6 js_form-child-sort"
+      },
+      row_attr: {
+        class: "w-auto"
+      }
+    }) }}
+    {{ form_row(child.delete, {
+      attr: {
+        class: "js_cms-child-delete"
+      },
+      row_attr: {
+        class: "align-self-center mx-4"
+      }
+    }) }}
+  </div>
+  <div class="l_form__row">
+    {% include "admin/include/_fileUploader.html.twig" with {
+      entity: child.vars.value.getClass~":image",
+      file_element: child.image,
+      width_element: child.imageWidth,
+      height_element: child.imageHeight
+    } %}
+    <div class="d-flex js_cms-child-youtube">
+      {{ form_row(child.youtubeId, {
+        attr: {
+          class: "w-12"
+        },
+      }) }}
+      <div class="mx-2 js_cms-child-youtube__preview">
+        {% if child.vars.value.youtubeId %}
+          <a href="https://www.youtube.com/watch?v={{ child.vars.value.youtubeId }}" rel="noopener noreferer" target="_blank">
+            <img src="https://img.youtube.com/vi/{{ child.vars.value.youtubeId }}/default.jpg" alt="">
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="l_form__row l_form__row--full">
+    {{ form_row(child.content, {
+      attr: {
+        class: "ckeditor"
+      }
+    }) }}
+  </div>
+</div>

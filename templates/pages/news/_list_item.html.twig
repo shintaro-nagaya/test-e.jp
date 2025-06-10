@@ -1,0 +1,25 @@
+<a
+  {% if entry.linkUrl %}
+  href="{{ entry.linkUrl }}"{% if entry.linkNewTab %} target="_blank"{% endif %}
+  {% else %}
+  href="{{ path('news_detail', {id: entry.id}) }}"
+  {% endif %}
+>
+
+  {% if entry.hasThumbnailImage %}
+  <img src="{{ entry.getThumbnailUrl }}" alt="{{ entry.title }}">
+  {% else %}
+    <img src="{{ asset('build/images/no_image.jpg') }}" alt="{{ entry.title }}">
+  {% endif %}
+
+  <h1>
+    {{ entry.title }}
+  </h1>
+  <time>
+    {{ entry.entryDate|carbon.isoFormat('YYYY.MM.DD (ddd)') }}
+  </time>
+  <span>
+    {{ entry.category }}
+  </span>
+
+</a>

@@ -1,0 +1,11 @@
+.l_datetime-widget {
+  &>div {
+    display: flex;
+  }
+  .form-control {
+    width: 12rem;
+  }
+  .input-group {
+    width: auto;
+  }
+}

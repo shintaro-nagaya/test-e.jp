@@ -1,0 +1,28 @@
+<div class="accordion-item">
+  {% if items is not defined %}
+  <a href="{{ uri }}" class="l_admin-header__link l_admin-header__link--single">
+    {{ name }}
+  </a>
+  {% else %}
+  <div class="accordion-header" id="AdminHeader{{ key }}">
+    <div class="accordion-button{% if not (app.request.uri matches uri) %} collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#AdminMenu{{ key }}" aria-expanded="true" aria-controls="AdminMenu{{ key }}">
+      {{ name }}
+    </div>
+  </div>
+  <div id="AdminMenu{{ key }}" class="accordion-collapse collapse{% if app.request.uri matches uri %} show{% endif %}" aria-labelledby="AdminHeader{{ key }}" data-bs-parent="#AdminHeaderMenu">
+    <div class="accordion-body">
+      {% for page in items %}
+        {% if page.enable is not defined or (page.enable is defined and page.enable) %}
+      <a
+        {% if page.uri is defined %} href="{{ page.uri }}"{% endif %}
+        class="l_admin-header__link{% if page.extraClass is defined %} {{ page.extraClass }}{% endif %}"
+        {% if page.extraAttr is defined %}{% for key,value in page.extraAttr %} {{ key }}="{{ value }}"{% endfor %}{% endif %}
+      >
+        {{ page.name }}
+      </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>

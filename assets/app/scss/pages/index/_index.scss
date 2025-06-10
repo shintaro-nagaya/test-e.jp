@@ -1,0 +1,10 @@
+@use "@scss/object/utility" as *;
+@use "@scss/global/variables" as *;
+@use "@scss/global/mixins" as *;
+
+
+[id="index"] {
+  h1 {
+    @apply text-6xl;
+  }
+}

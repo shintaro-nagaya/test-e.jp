@@ -1,0 +1,52 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}News一覧 | {{ parent() }}{% endblock %}
+{% block meta_og_title %}News一覧 | {{ parent() }}{% endblock %}
+{% block meta_twitter_title %}News一覧 | {{ parent() }}{% endblock %}
+{% block meta_description %}News一覧 | {{ parent() }}{% endblock %}
+{% block meta_og_description %}News一覧 | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="breadcrumb">
+  <a class="breadcrumb-item" href="{{ path('top') }}">
+    TOP
+  </a>
+  <a class="breadcrumb-item" href="{{ path('news_index')}}">
+    News
+  </a>
+  {% if paginate.getExtra.criteria.Category %}
+    {% for category in categories %}
+    {% if category[0].id == paginate.getExtra.criteria.Category %}
+      <a class="breadcrumb-item" href="{{ path('news_index', {Category: category[0].id}) }}">
+        {{ category[0].name}}
+      </a>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+{# カテゴリー選択 #}
+<div>
+  <a
+    href="{{ path('news_index') }}"
+    {% if not paginate.getExtra.criteria.Category %}class="active"{% endif %}
+  >
+    All
+  </a>
+  {% for category in categories %}
+  <a
+    href="{{ path('news_index', {Category: category[0].id}) }}"
+    {% if paginate.getExtra.criteria.Category == category[0].id %}class="active"{% endif %}
+  >
+    {{ category[0].name }} ({{ category.entry_count }})
+  </a>
+  {% endfor %}
+</div>
+
+<div>
+  {% for entry in paginate.getPaginator.getIterator %}
+  {% include "pages/news/_list_item.html.twig" %}
+  {% endfor %}
+</div>
+
+
+{% endblock %}

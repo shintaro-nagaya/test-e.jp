@@ -1,0 +1,72 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}管理画面アカウント{% endblock %}
+{% block body %}
+
+<h2 class="h2 l_admin__title">
+  管理画面アカウント
+</h2>
+
+{{ form_start(form, {
+  action: path('admin_account'),
+  attr: {
+    class: "l_index__search js_search-form"
+  }
+}) }}
+  <div class="l_form__row--4box">
+    {{ form_row(
+      form.name
+    )}}
+  </div>
+  <div>
+    <button class="btn btn-info" type="submit">検索</button>
+    <a class="btn btn-warning js_search-form-reset">リセット</a>
+  </div>
+{{ form_end(form) }}
+
+{% include "admin/include/_pagination.html.twig" %}
+  <div class="l_index__table-pre-space">
+    <a href="{{ path('admin_account_add', {
+      return_page: paginate.currentPage
+    }) }}" class="btn btn-primary">アカウント作成</a>
+  </div>
+
+  <table class="l_table table">
+    <thead>
+      <tr>
+        <th>
+          名称
+        </th>
+        <th>
+          メールアドレス
+        </th>
+        <th>
+          権限
+        </th>
+        <th class="l_table__btn-col">
+          編集
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for user in data %}
+      <tr>
+        <td>
+          {{ user.name }}
+        </td>
+        <td>
+          {{ user.email}}
+        </td>
+        <td>
+          {{ user.getRoleNames|join(",") }}
+        </td>
+        <td>
+          <a href="{{ path('admin_account_edit', {
+            id: user.id,
+            return_page: paginate.currentPage
+          }) }}" class="btn btn-info">編集</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

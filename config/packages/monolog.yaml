@@ -1,0 +1,127 @@
+monolog:
+    channels:
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - "login"
+
+when@dev:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                buffer_size: 50
+            nested:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: info
+                channels: ~
+            # uncomment to get logging in your browser
+            # you may have to allow bigger header sizes in your Web server configuration
+            #firephp:
+            #    type: firephp
+            #    level: info
+            #chromephp:
+            #    type: chromephp
+            #    level: info
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine", "!console"]
+            app:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%_app.log"
+            app_filter:
+                type: filter
+                handler: app
+                max_level: error
+                channels: ["app"]
+
+when@test:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                excluded_http_codes: [404, 405]
+            nested:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                channels: ["!console"]
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine"]
+            deprecation:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+            deprecation_filter:
+                type: filter
+                handler: deprecation
+                max_level: info
+                channels: ["php"]
+            app:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%_app.log"
+            app_filter:
+                type: filter
+                handler: app
+                max_level: error
+                channels: ["app"]
+
+when@prod:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                excluded_http_codes: [ 404, 405 ]
+            nested:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                channels: [ "!console" ]
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: [ "!event", "!doctrine" ]
+            deprecation:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+            deprecation_filter:
+                type: filter
+                handler: deprecation
+                max_level: info
+                channels: [ "php" ]
+            app:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%_app.log"
+            app_filter:
+                type: filter
+                handler: app
+                max_level: error
+                channels: [ "app" ]
+            slack_errors:
+                type: fingers_crossed
+                action_level: error
+                excluded_404s:
+                    - ^/
+                handler: slack_errors_handler
+            slack_errors_handler:
+                type: slack
+                token: '%env(SLACK_TOKEN)%'
+                channel: '%env(SLACK_CHANNEL)%'
+                bot_name: 'Notifier'
+                icon_emoji: ':ghost:' # 👻
+                level: error
+                include_extra: true
+            login:
+                type: rotating_file
+                path: "%kernel.logs_dir%/login.log"
+            login_filter:
+                type: filter
+                handler: login
+                channels: [ "login" ]

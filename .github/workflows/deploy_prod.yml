@@ -1,0 +1,58 @@
+name: Release to X server
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VAR: 16
+  PHP_VER: 8.3
+
+jobs:
+  job1:
+    name: DeployStg
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VER }}
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        id: node_modules_cache
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-${{ github.ref_name }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.ref_name }}-node-modules-
+
+      - name: npm Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: npm build
+        run: yarn encore production
+
+      - name: ssh key generate
+        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Deploy
+        run: rsync -rltD --exclude-from=.rsync_excludes --exclude "key" -e "ssh -oHostKeyAlgorithms=+ssh-dss -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SSH_PORT }}" ./ ${{ secrets.SSH_STG_USER }}@${{ secrets.SSH_STG_HOST }}:${{ secrets.SSH_STG_PATH }}
+
+      - name: ssh and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_STG_HOST }}
+          username: ${{ secrets.SSH_STG_USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.SSH_STG_PATH }}
+            composer install

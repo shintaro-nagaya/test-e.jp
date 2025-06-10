@@ -1,0 +1,26 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}ログイン情報編集{% endblock %}
+{% block body %}
+
+  <h2 class="h2 l_admin__title">
+    ログイン情報編集
+  </h2>
+
+  {{ form_start(form, {
+    attr: {
+      "id": "input-form"
+    }
+  } )}}
+  <div class="l_form__row l_form__row--3box">
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plain_password) }}
+  </div>
+
+  {{ form_end(form) }}
+
+  {% include "admin/include/_formBtn.html.twig" with {
+    addDeleteBtn: false,
+    isCreate: false
+  } %}
+{% endblock %}

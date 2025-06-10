@@ -1,0 +1,45 @@
+.form-check {
+  position: relative;
+  margin: 0.5rem 0;
+  &>input {
+    display: none;
+    &+.form-check-label {
+      position:relative;
+      padding-left: 0.5rem;
+      &:before {
+        content:"";
+        display:block;
+        position: absolute;
+        left:-1.5rem;
+        width: 1.5rem;
+        height:1.5rem;
+        background-color:#eee;
+        border:2px solid #999;
+      }
+    }
+    &[type=checkbox]+.form-check-label:before {
+      border-radius: 4px;
+    }
+    &[type=radio]+.form-check-label:before {
+      border-radius: 50%;
+    }
+    &:checked+.form-check-label:before {
+      background-color:#0076cb;
+    }
+    &[type=checkbox]:checked+.form-check-label:after {
+      content:"";
+      display:block;
+      position: absolute;
+      left: -1.1rem;
+      top: calc(50% - 0.3rem);
+      width: 13px;
+      height: 7px;
+      border-bottom:3px solid #fff;
+      border-left: 3px solid #fff;
+      transform-origin: center center;
+      transform:rotate(-45deg);
+
+    }
+  }
+
+}
