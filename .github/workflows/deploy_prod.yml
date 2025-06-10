@@ -44,7 +44,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
       - name: Deploy
-        run: rsync -rltD --exclude-from=.rsync_excludes --exclude "key" -e "ssh -oHostKeyAlgorithms=+ssh-dss -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SSH_PORT }}" ./ ${{ secrets.SSH_STG_USER }}@${{ secrets.SSH_STG_HOST }}:${{ secrets.SSH_STG_PATH }}
+        run: rsync -rltD --exclude-from=.rsync_excludes --exclude "key" -e "ssh -oHostKeyAlgorithms=+ssh-dss -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SSH_PORT }}" ./ ${{ secrets.SSH_STG_USER }}@${{ secrets.SSH_STG_HOST }}:${{ secrets.SSH_PROD_PATH }}
 
       - name: ssh and deploy
         uses: appleboy/ssh-action@master
@@ -54,5 +54,5 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ secrets.SSH_STG_PATH }}
+            cd ${{ secrets.SSH_PROD_PATH }}
             composer install
